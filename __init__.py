@@ -202,14 +202,10 @@ class Flowmeter(StepBase):
         if self.actorB is not None:
             self.actor_off(self.actorB)   
         if self.resetFlowmeter == "1":
-            for key, value in cbpi.cache.get("sensors").iteritems():
-                if key == int(self.sensor):
-                    value.instance.reset()
+            cbpi.cache.get("sensors").get(int(self.sensor)).instance.reset()
 
     def execute(self):
-        for key, value in cbpi.cache.get("sensors").iteritems():
-            if key == int(self.sensor):
-                sensorValue = value.instance.getValue()
+        sensorValue = cbpi.cache.get("sensors").get(int(self.sensor)).instance.getValue()
         if sensorValue >= self.volume:
             self.next()
 
